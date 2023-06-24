@@ -1,0 +1,28 @@
+{
+	"canisters": {
+		"ui": {
+			"dependencies": [],
+			"frontend": {
+				"entrypoint": "build/index.html"
+			},
+			"source": ["build"],
+			"gzip": true,
+			"optimize": "cycles",
+			"type": "assets"
+		}
+	},
+	"defaults": {
+		"build": {
+			"args": "",
+			"packtool": "vessel sources"
+		}
+	},
+	"networks": {
+		"staging": {
+			"providers": ["https://icp0.io"],
+			"type": "persistent"
+		}
+	},
+	"dfx": "0.14.1",
+	"version": 1
+}
