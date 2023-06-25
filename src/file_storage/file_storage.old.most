@@ -1,0 +1,23 @@
+// Version: 1.0.0
+type Asset =
+  {
+    canister_id : Text;
+    chunks_size : Nat;
+    content : ?[Blob];
+    content_encoding : ContentEncoding;
+    content_size : Nat;
+    content_type : Text;
+    created : Int;
+    filename : Text;
+    id : Text;
+    owner : Text;
+    url : Text
+  };
+type Asset_ID = Text;
+type Asset_ID__1 = Asset_ID;
+type Asset__1 = Asset;
+type ContentEncoding = {#GZIP; #Identity};
+actor {
+  stable var assets_stable_storage : [(Asset_ID__1, Asset__1)];
+  stable var timer_id : Nat
+};

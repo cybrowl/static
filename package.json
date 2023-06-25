@@ -9,7 +9,7 @@
 	"dependencies": {
 		"dotenv": "^16.0.3",
 		"lodash": "^4.17.21",
-		"static-components": "^0.2.1",
+		"static-components": "^0.2.6",
 		"svelte-local-storage-store": "^0.2.6"
 	},
 	"devDependencies": {
