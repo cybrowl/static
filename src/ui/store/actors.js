@@ -1,5 +1,6 @@
 import { Actor, HttpAgent } from '@dfinity/agent';
-import { idlFactory as idl_assets_file_staging } from '$IDLassets_file_staging';
+import { idlFactory as file_scaling_manager } from '$IDLfile_scaling_manager';
+import { idlFactory as file_storage } from '$IDLfile_storage';
 
 import { writable } from 'svelte/store';
 import environment from 'environment';
@@ -21,7 +22,8 @@ export function createActor(options) {
 	const agentOptions = { host };
 
 	const idl_reference = {
-		assets_file_staging: idl_assets_file_staging
+		file_scaling_manager,
+		file_storage
 	};
 
 	if (options && options.identity) {
@@ -45,7 +47,12 @@ export function createActor(options) {
 	});
 }
 
-export const actor_assets_file_staging = writable({
+export const actor_file_scaling_manager = writable({
 	loggedIn: false,
-	actor: createActor({ actor_name: 'assets_file_staging' })
+	actor: createActor({ actor_name: 'file_scaling_manager' })
+});
+
+export const actor_file_storage = writable({
+	loggedIn: false,
+	actor: createActor({ actor_name: 'file_storage' })
 });

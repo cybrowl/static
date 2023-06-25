@@ -1,9 +1,38 @@
 <script>
 	import { onMount } from 'svelte';
+	import { AssetManager } from 'agent-js-file-upload';
 
 	import { PageNavigation, UploadButton, Image } from 'static-components';
+	import { actor_file_storage } from '$stores_ref/actors';
+	import environment from 'environment';
 
-	onMount(async () => {});
+	const env = environment();
+
+	const canisterIds = env.canisterIds['file_storage'];
+	const file_storage_canister_id = canisterIds[env['DFX_NETWORK']];
+
+	const host = env.isProd
+		? `https://${file_storage_canister_id}.icp0.io/`
+		: `http://127.0.0.1:8080`;
+
+	const asset_manager = new AssetManager({
+		actor_config: {
+			canister_id: file_storage_canister_id,
+			identity: null,
+			host: host,
+			is_prod: env.isProd
+		}
+	});
+
+	onMount(async () => {
+		try {
+			let res = await $actor_file_storage.actor.version();
+			console.log('res: ', res);
+
+			const response = await asset_manager.getCanisterVersion();
+			console.log('version: ', response);
+		} catch (error) {}
+	});
 
 	let assets = [];
 </script>
