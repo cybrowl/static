@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { get } from 'lodash';
 	import { AssetManager } from 'agent-js-file-upload';
 
 	import { PageNavigation, UploadButton, Image } from 'static-components';
@@ -24,17 +25,35 @@
 		}
 	});
 
+	let assets = [];
+
 	onMount(async () => {
 		try {
 			let res = await $actor_file_storage.actor.version();
-			console.log('res: ', res);
 
-			const response = await asset_manager.getCanisterVersion();
-			console.log('version: ', response);
+			const { ok: assets_ } = await asset_manager.listFiles();
+
+			assets = assets_;
 		} catch (error) {}
 	});
 
-	let assets = [];
+	async function handleFileSelection(event) {
+		const file = event.detail;
+		const file_name = get(file, 'name', '');
+		const file_type = get(file, 'type', '');
+		const file_array_buffer = file && new Uint8Array(await file.arrayBuffer());
+
+		try {
+			const { ok: asset_id } = await asset_manager.store(file_array_buffer, {
+				filename: file_name,
+				content_type: file_type
+			});
+
+			const { ok: assets_ } = await asset_manager.listFiles();
+
+			assets = assets_;
+		} catch (error) {}
+	}
 </script>
 
 <!-- Home -->
@@ -50,12 +69,12 @@
 				{ name: 'Canisters', isSelected: false }
 			]}
 		>
-			<UploadButton />
+			<UploadButton on:fileSelection={handleFileSelection} />
 		</PageNavigation>
 	</div>
 	<div class="images_layout">
 		{#each assets as asset}
-			{#if asset.type === 'image'}
+			{#if asset.content_type.includes('image')}
 				<Image {asset} />
 			{/if}
 		{/each}
