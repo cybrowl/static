@@ -10,4 +10,4 @@ type FileScalingManager = service {
   init : () -> (text);
   version : () -> (nat) query;
 };
-service : FileScalingManager
+service : (bool) -> FileScalingManager
