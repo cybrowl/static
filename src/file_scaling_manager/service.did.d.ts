@@ -7,9 +7,10 @@ export interface CanisterInfo {
   'name' : string,
   'parent_name' : string,
 }
-export interface _SERVICE {
+export interface FileScalingManager {
   'get_canister_records' : ActorMethod<[], Array<CanisterInfo>>,
   'get_file_storage_canister_id' : ActorMethod<[], string>,
   'init' : ActorMethod<[], string>,
   'version' : ActorMethod<[], bigint>,
 }
+export interface _SERVICE extends FileScalingManager {}

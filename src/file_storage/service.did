@@ -68,4 +68,4 @@ type StreamingStrategy = variant {
   };
 };
 type TimerId = nat;
-service : FileStorage
+service : (bool) -> FileStorage

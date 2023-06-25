@@ -13,12 +13,12 @@
 		"file_scaling_manager": {
 			"type": "custom",
 			"candid": "src/file_scaling_manager/service.did",
-			"wasm": "src/file_scaling_manager/file_scaling_manager.wasm.gz"
+			"wasm": "src/file_scaling_manager/file_scaling_manager.wasm"
 		},
 		"file_storage": {
 			"type": "custom",
 			"candid": "src/file_storage/service.did",
-			"wasm": "src/file_storage/file_storage.wasm.gz"
+			"wasm": "src/file_storage/file_storage.wasm"
 		}
 	},
 	"networks": {

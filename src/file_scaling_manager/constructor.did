@@ -1,3 +1,10 @@
+type FileScalingManager = 
+ service {
+   get_canister_records: () -> (vec CanisterInfo) query;
+   get_file_storage_canister_id: () -> (text);
+   init: () -> (text);
+   version: () -> (nat) query;
+ };
 type CanisterInfo = 
  record {
    created: int;
@@ -5,9 +12,4 @@ type CanisterInfo =
    name: text;
    parent_name: text;
  };
-service : {
-  get_canister_records: () -> (vec CanisterInfo) query;
-  get_file_storage_canister_id: () -> (text);
-  init: () -> (text);
-  version: () -> (nat) query;
-}
+service : (bool) -> FileScalingManager

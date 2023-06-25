@@ -5,11 +5,12 @@ export const idlFactory = ({ IDL }) => {
     'name' : IDL.Text,
     'parent_name' : IDL.Text,
   });
-  return IDL.Service({
+  const FileScalingManager = IDL.Service({
     'get_canister_records' : IDL.Func([], [IDL.Vec(CanisterInfo)], ['query']),
     'get_file_storage_canister_id' : IDL.Func([], [IDL.Text], []),
     'init' : IDL.Func([], [IDL.Text], []),
     'version' : IDL.Func([], [IDL.Nat], ['query']),
   });
+  return FileScalingManager;
 };
 export const init = ({ IDL }) => { return []; };
