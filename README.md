@@ -10,7 +10,10 @@ https://github.com/cybrowl/static-components
 
 ```
 npm install
-sh ./scripts/install-local.sh
+
+dfx deploy file_scaling_manager --argument='(false)'
+
+dfx deploy file_storage --argument='(false)'
 ```
 
 ## Unit Testing
