@@ -4,6 +4,8 @@
 	import { AssetManager } from 'agent-js-file-upload';
 
 	import { PageNavigation, UploadButton, Image } from 'static-components';
+	import VideoPlayer from 'svelte-video-player';
+
 	import { actor_file_storage } from '$stores_ref/actors';
 	import environment from 'environment';
 
@@ -32,6 +34,8 @@
 			let res = await $actor_file_storage.actor.version();
 
 			const { ok: assets_ } = await asset_manager.listFiles();
+
+			console.log('assets_: ', assets_);
 
 			assets = assets_;
 		} catch (error) {}
@@ -78,6 +82,9 @@
 		{#each assets as asset}
 			{#if asset.content_type.includes('image')}
 				<Image {asset} />
+			{/if}
+			{#if asset.content_type.includes('video')}
+				<VideoPlayer source={[asset.url]} />;
 			{/if}
 		{/each}
 	</div>
