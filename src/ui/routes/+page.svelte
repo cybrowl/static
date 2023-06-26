@@ -22,6 +22,9 @@
 
 	onMount(async () => {
 		try {
+			let can_records = await $actor_file_scaling_manager.actor.get_canister_records();
+			console.log('can_records: ', can_records);
+
 			let canister_id = await $actor_file_scaling_manager.actor.get_file_storage_canister_id();
 			const host = env.isProd ? `https://${canister_id}.icp0.io/` : `http://127.0.0.1:8080`;
 
@@ -38,7 +41,9 @@
 			console.log('assets_: ', assets_);
 
 			assets = assets_;
-		} catch (error) {}
+		} catch (error) {
+			console.log('err: ', error);
+		}
 	});
 
 	async function handleFileSelection(event) {

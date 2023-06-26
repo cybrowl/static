@@ -10,6 +10,7 @@ export interface CanisterInfo {
 }
 export interface FileScalingManager {
 	get_canister_records: ActorMethod<[], Array<CanisterInfo>>;
+	get_current_canister: ActorMethod<[], [] | [CanisterInfo]>;
 	get_file_storage_canister_id: ActorMethod<[], string>;
 	init: ActorMethod<[], string>;
 	version: ActorMethod<[], bigint>;
