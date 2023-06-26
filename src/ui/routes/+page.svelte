@@ -6,33 +6,31 @@
 	import { PageNavigation, UploadButton, Image } from 'static-components';
 	import VideoPlayer from 'svelte-video-player';
 
-	import { actor_file_storage } from '$stores_ref/actors';
+	import { actor_file_scaling_manager } from '$stores_ref/actors';
 	import environment from 'environment';
 
 	const env = environment();
 
-	const canisterIds = env.canisterIds['file_storage'];
-	const file_storage_canister_id = canisterIds[env['DFX_NETWORK']];
+	//NOTE: this is if you want to get a single canister defined in dfx
+	// const canisterIds = env.canisterIds['file_storage'];
+	// let file_storage_canister_id = canisterIds[env['DFX_NETWORK']];
 
-	const host = env.isProd
-		? `https://${file_storage_canister_id}.icp0.io/`
-		: `http://127.0.0.1:8080`;
-
-	const asset_manager = new AssetManager({
-		actor_config: {
-			canister_id: file_storage_canister_id,
-			identity: null,
-			host: host,
-			is_prod: env.isProd
-		}
-	});
-
+	let asset_manager = {};
 	let assets = [];
 
 	onMount(async () => {
 		try {
-			let res = await $actor_file_storage.actor.version();
+			let canister_id = await $actor_file_scaling_manager.actor.get_file_storage_canister_id();
+			const host = env.isProd ? `https://${canister_id}.icp0.io/` : `http://127.0.0.1:8080`;
 
+			asset_manager = new AssetManager({
+				actor_config: {
+					canister_id: canister_id,
+					identity: null,
+					host: host,
+					is_prod: env.isProd
+				}
+			});
 			const { ok: assets_ } = await asset_manager.listFiles();
 
 			console.log('assets_: ', assets_);
