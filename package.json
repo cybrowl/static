@@ -1,13 +1,13 @@
 {
 	"private": true,
 	"name": "static",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"type": "module",
 	"scripts": {
 		"build": "vite build"
 	},
 	"dependencies": {
-		"agent-js-file-upload": "^0.2.1",
+		"agent-js-file-upload": "^0.2.2",
 		"dotenv": "^16.0.3",
 		"lodash": "^4.17.21",
 		"static-components": "^0.2.7",
