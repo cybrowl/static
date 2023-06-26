@@ -3,15 +3,18 @@
 	import { get } from 'lodash';
 	import { AssetManager } from 'agent-js-file-upload';
 
-	import { PageNavigation, UploadButton, Image } from 'static-components';
+	import { PageNavigation, UploadButton, Image, JsonDisplay } from 'static-components';
 	import VideoPlayer from 'svelte-video-player';
 	import { Jumper } from 'svelte-loading-spinners';
 
 	import { actor_file_scaling_manager } from '$stores_ref/actors';
+	import { nav_items, select_item } from '$stores_ref/page_navigation';
+
 	import environment from 'environment';
 
 	const env = environment();
 
+	select_item(0);
 	//NOTE: this is if you want to get a single canister defined in dfx
 	// const canisterIds = env.canisterIds['file_storage'];
 	// let file_storage_canister_id = canisterIds[env['DFX_NETWORK']];
@@ -77,12 +80,7 @@
 
 <main class="grid_layout">
 	<div class="navigation_main_layout">
-		<PageNavigation
-			navigationItems={[
-				{ name: 'Home', isSelected: false },
-				{ name: 'Canisters', isSelected: false }
-			]}
-		>
+		<PageNavigation navigationItems={nav_items}>
 			{#if is_uploading}
 				<Jumper size="60" color="#a6b98b" unit="px" duration="1s" />
 			{:else}
