@@ -10,7 +10,7 @@
 		"agent-js-file-upload": "^0.2.1",
 		"dotenv": "^16.0.3",
 		"lodash": "^4.17.21",
-		"static-components": "^0.2.6",
+		"static-components": "^0.2.7",
 		"svelte-loading-spinners": "^0.3.4",
 		"svelte-local-storage-store": "^0.2.6",
 		"svelte-video-player": "^1.2.5"
