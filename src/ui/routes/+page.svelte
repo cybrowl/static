@@ -5,6 +5,7 @@
 
 	import { PageNavigation, UploadButton, Image } from 'static-components';
 	import VideoPlayer from 'svelte-video-player';
+	import { Jumper } from 'svelte-loading-spinners';
 
 	import { actor_file_scaling_manager } from '$stores_ref/actors';
 	import environment from 'environment';
@@ -17,6 +18,7 @@
 
 	let asset_manager = {};
 	let assets = [];
+	let is_uploading = false;
 
 	onMount(async () => {
 		try {
@@ -46,6 +48,8 @@
 		const file_array_buffer = file && new Uint8Array(await file.arrayBuffer());
 
 		try {
+			is_uploading = true;
+
 			const { ok: asset_id } = await asset_manager.store(file_array_buffer, {
 				filename: file_name,
 				content_type: file_type
@@ -55,6 +59,7 @@
 
 			console.log('assets_: ', assets_);
 
+			is_uploading = false;
 			assets = assets_;
 		} catch (error) {}
 	}
@@ -73,7 +78,11 @@
 				{ name: 'Canisters', isSelected: false }
 			]}
 		>
-			<UploadButton on:fileSelection={handleFileSelection} />
+			{#if is_uploading}
+				<Jumper size="60" color="#a6b98b" unit="px" duration="1s" />
+			{:else}
+				<UploadButton on:fileSelection={handleFileSelection} />
+			{/if}
 		</PageNavigation>
 	</div>
 	<div class="images_layout">
@@ -93,7 +102,7 @@
 		@apply grid grid-cols-12 gap-y-2 relative mx-12 2xl:mx-60;
 	}
 	.navigation_main_layout {
-		@apply row-start-1 row-end-auto col-start-1 col-end-13;
+		@apply row-start-1 row-end-auto col-start-1 col-end-13 sticky top-0 z-30 bg-backdrop;
 	}
 	.images_layout {
 		@apply row-start-4 row-end-auto grid lg:grid-cols-3 md:grid-cols-2 col-start-1 col-end-13 gap-x-6 gap-y-12 mb-16;
