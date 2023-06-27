@@ -2,8 +2,9 @@
 	import { onMount } from 'svelte';
 	import { get } from 'lodash';
 	import { AssetManager } from 'agent-js-file-upload';
+	// import { AssetManager } from '@dfinity/file-upload';
 
-	import { PageNavigation, UploadButton, Image, JsonDisplay } from 'static-components';
+	import { PageNavigation, UploadButton, Image } from 'static-components';
 	import VideoPlayer from 'svelte-video-player';
 	import { Jumper } from 'svelte-loading-spinners';
 
