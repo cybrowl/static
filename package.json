@@ -8,10 +8,10 @@
 		"deploy": "sh ./scripts/deploy.sh"
 	},
 	"dependencies": {
-		"agent-js-file-upload": "^0.3.0",
+		"agent-js-file-upload": "^0.3.2",
 		"dotenv": "^16.0.3",
 		"lodash": "^4.17.21",
-		"static-components": "^0.3.2",
+		"static-components": "^0.4.1",
 		"svelte-loading-spinners": "^0.3.4",
 		"svelte-local-storage-store": "^0.2.6",
 		"svelte-video-player": "^1.2.5"

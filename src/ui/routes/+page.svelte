@@ -4,8 +4,7 @@
 	import { AssetManager } from 'agent-js-file-upload';
 	// import { AssetManager } from '@dfinity/file-upload';
 
-	import { PageNavigation, UploadButton, Image } from 'static-components';
-	import VideoPlayer from 'svelte-video-player';
+	import { PageNavigation, UploadButton, Image, VideoPlayer } from 'static-components';
 	import { Jumper } from 'svelte-loading-spinners';
 
 	import { actor_file_scaling_manager } from '$stores_ref/actors';
@@ -89,13 +88,13 @@
 			{/if}
 		</PageNavigation>
 	</div>
-	<div class="images_layout">
+	<div class="content_layout">
 		{#each assets as asset}
 			{#if asset.content_type.includes('image')}
 				<Image {asset} />
 			{/if}
 			{#if asset.content_type.includes('video')}
-				<VideoPlayer source={[asset.url]} />;
+				<VideoPlayer {asset} />
 			{/if}
 		{/each}
 	</div>
@@ -108,7 +107,7 @@
 	.navigation_main_layout {
 		@apply row-start-1 row-end-auto col-start-1 col-end-13 sticky top-0 z-30 bg-backdrop;
 	}
-	.images_layout {
+	.content_layout {
 		@apply row-start-4 row-end-auto grid lg:grid-cols-3 md:grid-cols-2 col-start-1 col-end-13 gap-x-6 gap-y-12 mb-16;
 	}
 </style>
