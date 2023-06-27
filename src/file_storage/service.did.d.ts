@@ -1,6 +1,5 @@
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
-
 export interface Asset {
 	id: string;
 	url: string;
@@ -17,18 +16,23 @@ export interface Asset {
 export interface AssetProperties {
 	content_type: string;
 	filename: string;
-	checksum: number;
+	checksum: bigint;
 	content_encoding: ContentEncoding;
 }
 export type Asset_ID = string;
 export type ContentEncoding = { GZIP: null } | { Identity: null };
+export type ErrCommitBatch =
+	| { ChecksumInvalid: boolean }
+	| { ChunkNotFound: boolean }
+	| { ChunkOwnerInvalid: boolean };
+export type ErrDeleteAsset = { AssetNotFound: boolean } | { NotAuthorized: boolean };
 export interface FileStorage {
-	assets_list: ActorMethod<[], Result_3>;
 	chunks_size: ActorMethod<[], bigint>;
-	commit_batch: ActorMethod<[string, AssetProperties], Result_2>;
-	create_chunk: ActorMethod<[string, Uint8Array | number[], bigint], bigint>;
+	commit_batch: ActorMethod<[Array<bigint>, AssetProperties], Result_2>;
+	create_chunk: ActorMethod<[Uint8Array | number[], bigint], bigint>;
 	delete_asset: ActorMethod<[Asset_ID], Result_1>;
 	get: ActorMethod<[Asset_ID], Result>;
+	get_all_assets: ActorMethod<[], Array<Asset>>;
 	get_health: ActorMethod<[], Health>;
 	http_request: ActorMethod<[HttpRequest], HttpResponse>;
 	http_request_streaming_callback: ActorMethod<
@@ -36,8 +40,6 @@ export interface FileStorage {
 		StreamingCallbackHttpResponse
 	>;
 	is_full: ActorMethod<[], boolean>;
-	start_clear_expired_chunks: ActorMethod<[], TimerId>;
-	stop_clear_expired_chunks: ActorMethod<[], TimerId>;
 	version: ActorMethod<[], bigint>;
 }
 export type HeaderField = [string, string];
@@ -60,9 +62,8 @@ export interface HttpResponse {
 	status_code: number;
 }
 export type Result = { ok: Asset } | { err: string };
-export type Result_1 = { ok: string } | { err: string };
-export type Result_2 = { ok: Asset_ID } | { err: string };
-export type Result_3 = { ok: Array<Asset> } | { err: string };
+export type Result_1 = { ok: string } | { err: ErrDeleteAsset };
+export type Result_2 = { ok: Asset_ID } | { err: ErrCommitBatch };
 export interface StreamingCallbackHttpResponse {
 	token: [] | [StreamingCallbackToken];
 	body: Uint8Array | number[];
@@ -78,5 +79,4 @@ export type StreamingStrategy = {
 		callback: [Principal, string];
 	};
 };
-export type TimerId = bigint;
 export interface _SERVICE extends FileStorage {}

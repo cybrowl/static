@@ -39,7 +39,7 @@
 					is_prod: env.isProd
 				}
 			});
-			const { ok: assets_ } = await asset_manager.listFiles();
+			const assets_ = await asset_manager.getAllAssets();
 
 			console.log('assets_: ', assets_);
 
@@ -50,20 +50,20 @@
 	});
 
 	async function handleFileSelection(event) {
+		is_uploading = true;
+
 		const file = event.detail;
 		const file_name = get(file, 'name', '');
 		const file_type = get(file, 'type', '');
 		const file_array_buffer = file && new Uint8Array(await file.arrayBuffer());
 
 		try {
-			is_uploading = true;
-
 			const { ok: asset_id } = await asset_manager.store(file_array_buffer, {
 				filename: file_name,
 				content_type: file_type
 			});
 
-			const { ok: assets_ } = await asset_manager.listFiles();
+			const assets_ = await asset_manager.getAllAssets();
 
 			console.log('assets_: ', assets_);
 
